@@ -4,20 +4,21 @@
 // この層は完成済み。まずは読んで理解する。
 
 // 一辺のマス目の数（16 なら 16×16 = 256 マス）。
-export const GRID_SIZE = 16;
+export const CANVAS_SIZE = 500;
+export const GRID_NUM = 25;
 
 // 塗るときの色と、空（消えている）マスの色。
 export const DEFAULT_COLOR = "#000000"; // 黒
 export const EMPTY_COLOR = "#ffffff"; // 白
 
-// 各マスの色を1次元配列で持つ（長さは GRID_SIZE×GRID_SIZE）。
+// 各マスの色を1次元配列で持つ（長さは GRID_NUM×GRID_NUM）。
 // export していないので外部からは直接触れず、下の関数を通して操作する。
 let cells: string[] = [];
 
 // 全マスを空(白)に戻す。
 export function clearCanvas(): void {
   cells = [];
-  for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+  for (let i = 0; i < GRID_NUM * GRID_NUM; i++) {
     cells.push(EMPTY_COLOR);
   }
   console.log("キャンバスを全消去しました");

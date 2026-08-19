@@ -20,19 +20,21 @@
 
       /* マス目コンテナ。幅 = 20px × 16マス = 320px。
          font-size: 0 は inline-block の間にできる余白(隙間)を消すため。 */
+      /* キャンパスの幅をCANVAS_SIZEで決める(固定)
+      　 １辺のマスの個数をGRID_NUMで決める(可変) */
       .pixel-canvas {
-        width: 320px;
+        width: CANVAS_SIZE + "px";
+        height: CANVAS_SIZE + "px";
         font-size: 0;
         border: 1px solid #999;
         margin: 16px 0;
       }
-
-      /* 1マス。box-sizing: border-box で枠線を含めて 20px にし、ぴったり16列にする。 */
+      /* 1マス。box-sizing: border-box で枠線を含めて 20px にし、ぴったり16列にする。➡変更済み */
       .pixel-cell {
         display: inline-block;
         box-sizing: border-box;
-        width: 20px;
-        height: 20px;
+        width: (CANVAS_SIZE / GRID_NUM) + "px";
+        height: (CANVAS_SIZE / GRID_NUM) + "px";
         border: 1px solid #eee;
         background: #fff;
         cursor: pointer;
@@ -48,7 +50,7 @@
 
   <body>
     <h1>ドット絵ペイント</h1>
-    <p>マス目をクリックして塗ってみましょう。</p>
+    <p>マス目を塗ってみましょう。</p>
 
     <!-- マス目は renderGrid がここに並べる。 -->
     <div id="canvas" class="pixel-canvas"></div>
@@ -58,10 +60,23 @@
       <button id="clear-button">全消去</button>
     </div>
 
-    <!--
-      拡張ポイント（ステップ2以降で使う空きエリア）。
-        - カラーパレット → ここに色ボタンを並べる
-    -->
+    <!-- 筆の太さ変更機能-->
+    <div class="controls">
+      <button id="brush-size-button" id="brush1">極小(1)</button>
+      <button id="brush-size-button" id="brush3">小(3×3)</button>
+      <button id="brush-size-button" id="brush5">中(5×5)</button>
+      <button id="brush-size-button" id="brush10">大(10×10)</button>
+    </div>
+
+    <!-- マスのサイズ変更機能-->
+    <div class="controls">
+      <button id="cell-size-button" id="cell10">10×10マス</button>
+      <button id="cell-size-button" id="cell25">25×25マス(デフォルト)</button>
+      <button id="cell-size-button" id="cell50">50×50マス</button>
+      <button id="cell-size-button" id="cell100">100×100マス</button>
+    </div>
+
+    <!-- 拡張ポイント（ステップ2以降で使う空きエリア）。- カラーパレット → ここに色ボタンを並べる -->
 
     <!-- TypeScript を読み込む（Vite が変換する）。 -->
     <script type="module" src="/src/main.ts"></script>

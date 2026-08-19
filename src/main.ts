@@ -3,7 +3,8 @@
 // キャンバスを用意してマス目を描き、マスのクリックと全消去ボタンに処理を結びつける。
 // この層は完成済み（ステップ1で render.ts を実装すれば動く）。
 
-import { clearCanvas, paintCell, getCellColor, GRID_SIZE, DEFAULT_COLOR } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, GRID_NUM, DEFAULT_COLOR } from "./canvas";
+import { paintSystem, shadowinCell, shadowoutCell } from "./pen_items";
 import { renderGrid, renderCell } from "./render";
 
 function main(): void {
@@ -15,14 +16,31 @@ function main(): void {
 
   // 全マスを class（pixel-cell）でまとめて取得して、クリック時の処理を結びつける。
   // index が「何番目のマスか」なので、そのまま処理の中で使える。
-  const cells = document.getElementsByClassName("pixel-cell");
+  const cells = document.getElementsByClassName("pixel-cell") as HTMLCollectionOf<HTMLElement>;
   for (let index = 0; index < cells.length; index++) {
-    cells[index].addEventListener("click", () => {
+    cells[index].addEventListener("mousedown", () => {
+      paintSystem(index, DEFAULT_COLOR);
+      /* paintSystemの中にまとめた
       // データを更新する（このマスを黒で塗る）。
       paintCell(index, DEFAULT_COLOR);
 
       // render.ts の renderCell を実装すると、ここでマスが塗られる（ステップ1）。
       renderCell(index, DEFAULT_COLOR);
+      */
+    });
+
+    cells[index].addEventListener("mousemove", (event: MouseEvent) => {
+      if (event.buttons === 1) {
+        paintSystem(index, DEFAULT_COLOR);
+      }
+    });
+    
+    //マウスが乗っているときに薄く表示する。
+    cells[index].addEventListener("mouseover", () => {
+      shadowinCell(index, DEFAULT_COLOR);
+    });
+    cells[index].addEventListener("mouseout", () => {
+      shadowoutCell(index);
     });
   }
 
@@ -30,7 +48,7 @@ function main(): void {
   clearButton?.addEventListener("click", () => {
     clearCanvas();
     // 全マスを、データ上の色（全消去後なので白）で塗り直す。
-    for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
+    for (let i = 0; i < GRID_NUM * GRID_NUM; i++) {
       renderCell(i, getCellColor(i));
     }
   });
