@@ -2,7 +2,9 @@ import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, GRID_NUM, DEFAULT_CO
 import { renderGrid, renderCell } from "./render";
 
 let before_color: string[] = [];
+let pen_size: number = 1;
 
+/* 塗るときの一連の操作をまとめた */
 export function paintSystem(index: number, color: string) {
     const cells = document.getElementsByClassName("pixel-cell");
     before_color[index] = color;

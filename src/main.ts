@@ -20,7 +20,7 @@ function main(): void {
   for (let index = 0; index < cells.length; index++) {
     cells[index].addEventListener("mousedown", () => {
       paintSystem(index, DEFAULT_COLOR);
-      /* paintSystemの中にまとめた
+      /* 以下の処理はpaintSystemの中にまとめた
       // データを更新する（このマスを黒で塗る）。
       paintCell(index, DEFAULT_COLOR);
 
