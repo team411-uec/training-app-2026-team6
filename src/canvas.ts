@@ -5,7 +5,7 @@
 
 // 一辺のマス目の数（16 なら 16×16 = 256 マス）。
 export const CANVAS_SIZE = 500;
-export const GRID_NUM = 25;
+import { GRID_NUM } from "./main";
 
 // 塗るときの色と、空（消えている）マスの色。
 export const DEFAULT_COLOR = "#000000"; // 黒

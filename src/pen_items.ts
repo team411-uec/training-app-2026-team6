@@ -1,8 +1,8 @@
-import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, GRID_NUM, DEFAULT_COLOR } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, DEFAULT_COLOR } from "./canvas";
+import { main,GRID_NUM } from "./main";
 import { renderGrid, renderCell } from "./render";
 
 let before_color: string[] = [];
-let pen_size: number = 1;
 
 /* 塗るときの一連の操作をまとめた */
 export function paintSystem(index: number, color: string) {
@@ -32,4 +32,84 @@ export function shadowoutCell(index:number): void {
     }
 }
 
-/* ペンのサイズを変更する　*/
+//　キャンパスのマスの個数変更の処理をする
+const Check10modal = document.getElementById("Check10-modal");
+const Check10button = document.getElementById("Check10-button");
+Check10button?.addEventListener("click", () => {
+    if (Check10modal) {
+        Check10modal.style.display = "flex";
+    }
+});
+
+const Check25modal = document.getElementById("Check25-modal");
+const Check25button = document.getElementById("Check25-button");
+Check25button?.addEventListener("click", () => {
+    if (Check25modal) {
+        Check25modal.style.display = "flex";
+    }
+});
+
+const Check50modal = document.getElementById("Check50-modal");
+const Check50button = document.getElementById("Check50-button");
+Check50button?.addEventListener("click", () => {
+    if (Check50modal) {
+        Check50modal.style.display = "flex";
+    }
+});
+
+const Check100modal = document.getElementById("Check100-modal");
+const Check100button = document.getElementById("Check100-button");
+Check100button?.addEventListener("click", () => {
+    if (Check100modal) {
+        Check100modal.style.display = "flex";
+    }
+});
+
+const Cancel10button = document.getElementById("Cancel10-button");
+Cancel10button?.addEventListener("click", () => {
+    if (Check10modal) {
+        Check10modal.style.display = "none";
+    }
+});
+
+const Cancel25button = document.getElementById("Cancel25-button");
+Cancel25button?.addEventListener("click", () => {
+    if (Check25modal) {
+        Check25modal.style.display = "none";
+    }
+});
+
+const Cancel50button = document.getElementById("Cancel50-button");
+Cancel50button?.addEventListener("click", () => {
+    if (Check50modal) {
+        Check50modal.style.display = "none";
+    }
+});
+
+const Cancel100button = document.getElementById("Cancel100-button");
+Cancel100button?.addEventListener("click", () => {
+    if (Check100modal) {
+        Check100modal.style.display = "none";
+    }
+});
+
+export function remakeGrid(): void {
+    if (Check10modal) {
+        Check10modal.style.display = "none";
+    }
+    if (Check25modal) {
+        Check25modal.style.display = "none";
+    }
+    if (Check50modal) {
+        Check50modal.style.display = "none";
+    }
+    if (Check100modal) {
+        Check100modal.style.display = "none";
+    }
+    clearCanvas();
+    // 全マスを、データ上の色（全消去後なので白）で塗り直す。
+    for (let i = 0; i < GRID_NUM * GRID_NUM; i++) {
+      renderCell(i, getCellColor(i));
+    }
+    main();
+}

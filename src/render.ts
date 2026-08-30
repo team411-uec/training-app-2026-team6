@@ -2,7 +2,8 @@
 // 状態を受け取って画面(DOM)に表示するだけを担当する。
 // 塗るロジックは canvas.ts、クリックと処理の連携は main.ts が持つ。
 
-import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, GRID_NUM, DEFAULT_COLOR } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, DEFAULT_COLOR } from "./canvas";
+import { GRID_NUM } from "./main";
 import { paintSystem, shadowinCell, shadowoutCell } from "./pen_items";
 
 // マス目（セル）を画面に並べて作る（完成済み）。
