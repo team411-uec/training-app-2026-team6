@@ -14,6 +14,8 @@ import {
 } from "./canvas";
 import { renderGrid, renderCell } from "./render";
 
+let currentColor = "black";
+
 function main(): void {
   // キャンバスを用意する（1回呼ぶと、全マスが白になる）。
   clearCanvas();
@@ -27,10 +29,10 @@ function main(): void {
   for (let index = 0; index < cells.length; index++) {
     cells[index].addEventListener("click", () => {
       // データを更新する（このマスを黒で塗る）。
-      paintCell(index, DEFAULT_COLOR);
+      paintCell(index, currentColor);
 
       // render.ts の renderCell を実装すると、ここでマスが塗られる（ステップ1）。
-      renderCell(index, DEFAULT_COLOR);
+      renderCell(index, currentColor);
     });
   }
 
@@ -43,6 +45,7 @@ function main(): void {
     }
   });
 
+<<<<<<< HEAD
   const undoButton = document.getElementById("undo-button");
   undoButton?.addEventListener("click", () => {
     const action = undo(); //canvas.tsのコマンドを使って最も直近の動作をactionへと保存する
@@ -61,6 +64,17 @@ function main(): void {
       renderCell(action.index, action.nextColor);
     }
   });
+=======
+  const colorButtons = document.querySelectorAll<HTMLButtonElement>('.color-btn');
+colorButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    if (button.dataset.color) {
+      currentColor = button.dataset.color;
+    }
+  });
+});
+
+>>>>>>> main
 }
 
 main();
