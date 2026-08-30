@@ -20,19 +20,21 @@
 
       /* マス目コンテナ。幅 = 20px × 16マス = 320px。
          font-size: 0 は inline-block の間にできる余白(隙間)を消すため。 */
+      /* キャンパスの幅をCANVAS_SIZEで決める(固定)
+      　 １辺のマスの個数をGRID_NUMで決める(可変) */
       .pixel-canvas {
-        width: 320px;
+        width: CANVAS_SIZE + "px";
+        height: CANVAS_SIZE + "px";
         font-size: 0;
         border: 1px solid #999;
         margin: 16px 0;
       }
-
-      /* 1マス。box-sizing: border-box で枠線を含めて 20px にし、ぴったり16列にする。 */
+      /* 1マス。box-sizing: border-box で枠線を含めて 20px にし、ぴったり16列にする。➡変更済み */
       .pixel-cell {
         display: inline-block;
         box-sizing: border-box;
-        width: 20px;
-        height: 20px;
+        width: (CANVAS_SIZE / GRID_NUM) + "px";
+        height: (CANVAS_SIZE / GRID_NUM) + "px";
         border: 1px solid #eee;
         background: #fff;
         cursor: pointer;
@@ -43,12 +45,50 @@
         font-size: 16px;
         cursor: pointer;
       }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        width: 500px;
+        border-radius: 15px;
+      }
+
+      .modal10 {
+        display: none;
+      }
+      .modal25 {
+        display: none;
+      }
+      .modal50 {
+        display: none;
+      }
+      .modal100 {
+        display: none;
+      }
+
+      .modal-content img {
+        width:25%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
     </style>
   </head>
 
   <body>
     <h1>ドット絵ペイント</h1>
-    <p>マス目をクリックして塗ってみましょう。</p>
+    <p>マス目を塗ってみましょう。</p>
 
     <!-- マス目は renderGrid がここに並べる。 -->
     <div id="canvas" class="pixel-canvas"></div>
@@ -65,10 +105,66 @@
       <button id="clear-button">全消去</button>
     </div>
 
-    <!--
-      拡張ポイント（ステップ2以降で使う空きエリア）。
-        - カラーパレット → ここに色ボタンを並べる
-    -->
+    <!-- ペンの大きさ変更機能-->
+    <div class="controls">
+      <button class="penSize1-button" id="penSize1">小(1×1)</button>
+      <button class="penSize3-button" id="penSize3">中(3×3)</button>
+      <button class="penSize5-button" id="penSize5">大(5×5)</button>
+    </div>
+
+    <!-- マスの個数変更機能-->
+    <div class="controls">
+      <button id="Check10-button" class="Check10-button">10×10マス</button>
+      <button id="Check25-button" class="Check25-button">25×25マス(デフォルト)</button>
+      <button id="Check50-button" class="Check50-button">50×50マス</button>
+      <button id="Check100-button" class="Check100-button">100×100マス</button>
+    </div>
+
+    <div class="modal modal10" id="Check10-modal">
+      <div class ="modal-content">
+        <img src="./Warning_Sign.jpeg" alt="警告"/>
+        <p>10×10のキャンパスに変更されます。元に戻せなくなりますがよろしいですか？</p>
+        <div class = controls>
+          <button id="gridNum10-button">はい</button>
+          <button id="Cancel10-button">いいえ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal25" id="Check25-modal">
+      <div class ="modal-content">
+        <img src="./Warning_Sign.jpeg" alt="警告"/>
+        <p>25×25のキャンパスに変更されます。元に戻せなくなりますがよろしいですか？</p>
+        <div class = controls>
+          <button id="gridNum25-button">はい</button>
+          <button id="Cancel25-button">いいえ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal50" id="Check50-modal">
+      <div class ="modal-content">
+        <img src="./Warning_Sign.jpeg" alt="警告"/>
+        <p>50×50のキャンパスに変更されます。元に戻せなくなりますがよろしいですか？</p>
+        <div class = controls>
+          <button id="gridNum50-button">はい</button>
+          <button id="Cancel50-button">いいえ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal100" id="Check100-modal">
+      <div class ="modal-content">
+        <img src="./Warning_Sign.jpeg" alt="警告"/>
+        <p>100×100のキャンパスに変更されます。元に戻せなくなりますがよろしいですか？</p>
+        <div class = controls>
+          <button id="gridNum100-button">はい</button>
+          <button id="Cancel100-button">いいえ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 拡張ポイント（ステップ2以降で使う空きエリア）。- カラーパレット → ここに色ボタンを並べる -->
 
     <!-- TypeScript を読み込む（Vite が変換する）。 -->
     <script type="module" src="/src/main.ts"></script>

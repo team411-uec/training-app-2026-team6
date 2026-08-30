@@ -2,22 +2,29 @@
 // 状態を受け取って画面(DOM)に表示するだけを担当する。
 // 塗るロジックは canvas.ts、クリックと処理の連携は main.ts が持つ。
 
-import { GRID_SIZE } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, CANVAS_SIZE, DEFAULT_COLOR } from "./canvas";
+import { GRID_NUM } from "./main";
+import { paintSystem, shadowinCell, shadowoutCell } from "./pen_items";
 
 // マス目（セル）を画面に並べて作る（完成済み）。
-// GRID_SIZE×GRID_SIZE の数だけ <div> を作り、#canvas に追加する。
+// GRID_NUM×GRID_NUM の数だけ <div> を作り、#canvas に追加する。
 // 各セルには class="pixel-cell" を付ける（まとめて取得し、index 番目で1マスずつ狙う）。
 export function renderGrid(): void {
   const container = document.getElementById("canvas");
+  if (container) {
+    container.style.width = CANVAS_SIZE + "px";
+  }
   if (container === null) return;
 
   // 念のため、すでにあるマスを消してから作り直す。
   container.textContent = "";
 
-  const total = GRID_SIZE * GRID_SIZE;
+  const total = GRID_NUM * GRID_NUM;
   for (let index = 0; index < total; index++) {
     const cell = document.createElement("div");
     cell.className = "pixel-cell";
+    cell.style.width = (CANVAS_SIZE / GRID_NUM) + "px";
+    cell.style.height = (CANVAS_SIZE / GRID_NUM) + "px";
     container.appendChild(cell);
   }
 }
@@ -33,7 +40,7 @@ export function renderGrid(): void {
 //  - 要素の背景色は style.backgroundColor で変えられる。
 export function renderCell(index: number, color: string): void {
   // ステップ0 ではコンソールに座標が出るだけ。
-  console.log("塗ったマス:", index, "　塗った色:", color);
+  console.log("塗ったマス:", index, " 塗った色:", color);
 
   // TODO（ステップ1）: ここに DOM 操作を書いて、マスの色を変える。
   const cells = document.getElementsByClassName("pixel-cell");
