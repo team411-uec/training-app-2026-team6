@@ -7,6 +7,7 @@ import { clearCanvas, paintCell, getCellColor, DEFAULT_COLOR } from "./canvas";
 import { paintSystem, shadowinCell, shadowoutCell, remakeGrid } from "./pen_items";
 import { renderGrid, renderCell } from "./render";
 
+let currentColor = "black";
 export let GRID_NUM: number = 25; // 初期値は 25×25 マス
 export function main(): void {
   // キャンバスを用意する（1回呼ぶと、全マスが白になる）。
@@ -52,7 +53,7 @@ export function main(): void {
       }
       /* 以下の処理はpaintSystemの中にまとめた
       // データを更新する（このマスを黒で塗る）。
-      paintCell(index, DEFAULT_COLOR);
+      paintCell(index, currentColor);
 
       // render.ts の renderCell を実装すると、ここでマスが塗られる（ステップ1）。
       renderCell(index, DEFAULT_COLOR);
@@ -62,33 +63,33 @@ export function main(): void {
     //マウスが押されているときに塗る処理を行う
     cells[index].addEventListener("mousemove", (event: MouseEvent) => {
       if (event.buttons === 1) {
-        paintSystem(index, DEFAULT_COLOR);
+        paintSystem(index, currentColor);
         if (penSize >= 3) {
-        paintSystem(index + 1, DEFAULT_COLOR);
-        paintSystem(index - 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM + 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM - 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM + 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM - 1, DEFAULT_COLOR);
+        paintSystem(index + 1, currentColor);
+        paintSystem(index - 1, currentColor);
+        paintSystem(index + GRID_NUM, currentColor);
+        paintSystem(index - GRID_NUM, currentColor);
+        paintSystem(index + GRID_NUM + 1, currentColor);
+        paintSystem(index + GRID_NUM - 1, currentColor);
+        paintSystem(index - GRID_NUM + 1, currentColor);
+        paintSystem(index - GRID_NUM - 1, currentColor);
         if (penSize >= 5) {
-        paintSystem(index + 2, DEFAULT_COLOR);
-        paintSystem(index - 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM + 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM - 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM + 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM - 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 - 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 - 2, DEFAULT_COLOR);
+        paintSystem(index + 2, currentColor);
+        paintSystem(index - 2, currentColor);
+        paintSystem(index + GRID_NUM * 2, currentColor);
+        paintSystem(index - GRID_NUM * 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 + 1, currentColor);
+        paintSystem(index + GRID_NUM * 2 - 1, currentColor);
+        paintSystem(index - GRID_NUM * 2 + 1, currentColor);
+        paintSystem(index - GRID_NUM * 2 - 1, currentColor);
+        paintSystem(index + GRID_NUM + 2, currentColor);
+        paintSystem(index + GRID_NUM - 2, currentColor);
+        paintSystem(index - GRID_NUM + 2, currentColor);
+        paintSystem(index - GRID_NUM - 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 + 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 - 2, currentColor);
+        paintSystem(index - GRID_NUM * 2 + 2, currentColor);
+        paintSystem(index - GRID_NUM * 2 - 2, currentColor);
       }
       }
       }
@@ -96,33 +97,33 @@ export function main(): void {
     
     //マウスが乗っているときに薄く表示する。
     cells[index].addEventListener("mouseover", () => {
-      shadowinCell(index, DEFAULT_COLOR);
+      shadowinCell(index, currentColor);
       if (penSize >= 3) {
-        shadowinCell(index + 1, DEFAULT_COLOR);
-        shadowinCell(index - 1, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM + 1, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM - 1, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM + 1, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM - 1, DEFAULT_COLOR);
+        shadowinCell(index + 1, currentColor);
+        shadowinCell(index - 1, currentColor);
+        shadowinCell(index + GRID_NUM, currentColor);
+        shadowinCell(index - GRID_NUM, currentColor);
+        shadowinCell(index + GRID_NUM + 1, currentColor);
+        shadowinCell(index + GRID_NUM - 1, currentColor);
+        shadowinCell(index - GRID_NUM + 1, currentColor);
+        shadowinCell(index - GRID_NUM - 1, currentColor);
         if (penSize >= 5) {
-        shadowinCell(index + 2, DEFAULT_COLOR);
-        shadowinCell(index - 2, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM * 2, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM * 2, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM + 2, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM - 2, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM + 2, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM - 2, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        shadowinCell(index + GRID_NUM * 2 - 2, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        shadowinCell(index - GRID_NUM * 2 - 2, DEFAULT_COLOR);
+        shadowinCell(index + 2, currentColor);
+        shadowinCell(index - 2, currentColor);
+        shadowinCell(index + GRID_NUM * 2, currentColor);
+        shadowinCell(index - GRID_NUM * 2, currentColor);
+        shadowinCell(index + GRID_NUM * 2 + 1, currentColor);
+        shadowinCell(index + GRID_NUM * 2 - 1, currentColor);
+        shadowinCell(index - GRID_NUM * 2 + 1, currentColor);
+        shadowinCell(index - GRID_NUM * 2 - 1, currentColor);
+        shadowinCell(index + GRID_NUM + 2, currentColor);
+        shadowinCell(index + GRID_NUM - 2, currentColor);
+        shadowinCell(index - GRID_NUM + 2, currentColor);
+        shadowinCell(index - GRID_NUM - 2, currentColor);
+        shadowinCell(index + GRID_NUM * 2 + 2, currentColor);
+        shadowinCell(index + GRID_NUM * 2 - 2, currentColor);
+        shadowinCell(index - GRID_NUM * 2 + 2, currentColor);
+        shadowinCell(index - GRID_NUM * 2 - 2, currentColor);
       }
       }
     });
@@ -211,6 +212,15 @@ export function main(): void {
     remakeGrid();
     console.log("100×100のキャンパスに変更されました");
   });
+  
+  const colorButtons = document.querySelectorAll<HTMLButtonElement>('.color-btn');
+colorButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    if (button.dataset.color) {
+      currentColor = button.dataset.color;
+    }
+  });
+});
 
 }
 
