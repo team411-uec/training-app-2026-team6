@@ -22,34 +22,34 @@ export function main(): void {
   for (let index = 0; index < cells.length; index++) {
     cells[index].addEventListener("mousedown", () => {
       //ボタンが押されたときに塗る処理を行う
-      paintSystem(index, DEFAULT_COLOR);
+      paintSystem(index, currentColor);
       if (penSize >= 3) {
-        paintSystem(index + 1, DEFAULT_COLOR);
-        paintSystem(index - 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM + 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM - 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM + 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM - 1, DEFAULT_COLOR);
+        paintSystem(index + 1, currentColor);
+        paintSystem(index - 1, currentColor);
+        paintSystem(index + GRID_NUM, currentColor);
+        paintSystem(index - GRID_NUM, currentColor);
+        paintSystem(index + GRID_NUM + 1, currentColor);
+        paintSystem(index + GRID_NUM - 1, currentColor);
+        paintSystem(index - GRID_NUM + 1, currentColor);
+        paintSystem(index - GRID_NUM - 1, currentColor);
       }
       if (penSize >= 5) {
-        paintSystem(index + 2, DEFAULT_COLOR);
-        paintSystem(index - 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 + 1, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 - 1, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM + 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM - 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM + 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM - 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        paintSystem(index + GRID_NUM * 2 - 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 + 2, DEFAULT_COLOR);
-        paintSystem(index - GRID_NUM * 2 - 2, DEFAULT_COLOR);
+        paintSystem(index + 2, currentColor);
+        paintSystem(index - 2, currentColor);
+        paintSystem(index + GRID_NUM * 2, currentColor);
+        paintSystem(index - GRID_NUM * 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 + 1, currentColor);
+        paintSystem(index + GRID_NUM * 2 - 1, currentColor);
+        paintSystem(index - GRID_NUM * 2 + 1, currentColor);
+        paintSystem(index - GRID_NUM * 2 - 1, currentColor);
+        paintSystem(index + GRID_NUM + 2, currentColor);
+        paintSystem(index + GRID_NUM - 2, currentColor);
+        paintSystem(index - GRID_NUM + 2, currentColor);
+        paintSystem(index - GRID_NUM - 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 + 2, currentColor);
+        paintSystem(index + GRID_NUM * 2 - 2, currentColor);
+        paintSystem(index - GRID_NUM * 2 + 2, currentColor);
+        paintSystem(index - GRID_NUM * 2 - 2, currentColor);
       }
       /* 以下の処理はpaintSystemの中にまとめた
       // データを更新する（このマスを黒で塗る）。
@@ -213,7 +213,7 @@ export function main(): void {
     console.log("100×100のキャンパスに変更されました");
   });
   
-
+  //一つ戻す、やり直す機能の処理をする
   const undoButton = document.getElementById("undo-button");
   undoButton?.addEventListener("click", () => {
     const action = undo(); //canvas.tsのコマンドを使って最も直近の動作をactionへと保存する
@@ -233,6 +233,7 @@ export function main(): void {
     }
   });
 
+  //ペンのカラーを追加する
   const colorButtons = document.querySelectorAll<HTMLButtonElement>('.color-btn');
 colorButtons.forEach((button) => {
   button.addEventListener('click', () => {

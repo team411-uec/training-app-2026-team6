@@ -10,8 +10,8 @@ export function paintSystem(index: number, color: string) {
     before_color[index] = color;
     (cells[index] as HTMLElement).style.backgroundColor = before_color[index];
     (cells[index] as HTMLElement).style.opacity = "";
-    paintCell(index, DEFAULT_COLOR);
-    renderCell(index, DEFAULT_COLOR);
+    paintCell(index, color);
+    renderCell(index, color);
 }
 
 /* 塗られるマス目を薄く表示する */
