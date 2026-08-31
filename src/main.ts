@@ -3,7 +3,7 @@
 // キャンバスを用意してマス目を描き、マスのクリックと全消去ボタンに処理を結びつける。
 // この層は完成済み（ステップ1で render.ts を実装すれば動く）。
 
-import { clearCanvas, paintCell, getCellColor, DEFAULT_COLOR } from "./canvas";
+import { clearCanvas, paintCell, getCellColor, DEFAULT_COLOR, undo, redo } from "./canvas";
 import { paintSystem, shadowinCell, shadowoutCell, remakeGrid } from "./pen_items";
 import { renderGrid, renderCell } from "./render";
 
@@ -213,6 +213,26 @@ export function main(): void {
     console.log("100×100のキャンパスに変更されました");
   });
   
+
+  const undoButton = document.getElementById("undo-button");
+  undoButton?.addEventListener("click", () => {
+    const action = undo(); //canvas.tsのコマンドを使って最も直近の動作をactionへと保存する
+
+    if (action) {
+      //actionが存在しない⇒初期の段階にボタンを押したときにnullが出てくるコマンドにしているため、actionが存在しないときに不具合を起こさないようにするため
+
+      renderCell(action.index, action.prevColor);
+      //これでrenderCellをactionに記録されたindexとColorで実行し、前の段階へと戻せる。
+    }
+  });
+  const redoButton = document.getElementById("redo-button");
+  redoButton?.addEventListener("click", () => {
+    const action = redo();
+    if (action) {
+      renderCell(action.index, action.nextColor);
+    }
+  });
+
   const colorButtons = document.querySelectorAll<HTMLButtonElement>('.color-btn');
 colorButtons.forEach((button) => {
   button.addEventListener('click', () => {
